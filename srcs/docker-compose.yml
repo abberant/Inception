@@ -1,0 +1,77 @@
+version: '3.8'
+
+#Services
+services:
+  mariadb:
+    container_name: mariadb
+    image: mariadb:42
+    init: true
+    build:
+      context: ./requirements/mariadb
+      dockerfile: Dockerfile
+      args:
+        - MYSQL_DATABASE
+        - MYSQL_USER
+        - MYSQL_PASSWORD
+        - MYSQL_ROOT_PASSWORD
+    networks:
+      - inception
+    volumes:
+      - mariadb:/var/lib/mysql
+    restart: always
+  
+  wordpress:
+    container_name: wordpress
+    image: wordpress:42
+    init: true
+    build:
+      context: ./requirements/wordpress
+      dockerfile: Dockerfile
+      args:
+        - MYSQL_DATABASE
+        - MYSQL_USER
+        - MYSQL_PASSWORD
+        - WORDPRESS_HOSTNAME
+    networks:
+      - inception
+    volumes:
+      - wordpress:/var/www/html
+    restart: always
+    depends_on:
+      - mariadb
+
+  nginx:
+    container_name: nginx
+    image: nginx:42
+    init: true
+    build:
+      context: ./requirements/nginx
+      dockerfile: Dockerfile
+      args:
+        - WORDPRESS_HOSTNAME
+    networks:
+      - inception
+    volumes:
+      - ./requirements/nginx
+    ports:
+      - "443:443"
+    restart: always
+    depends_on:
+        - mariadb
+        - wordpress
+
+
+#Volumes
+volumes:
+  mariadb:
+    name: mariadb
+    external: true
+  wordpress:
+    name: wordpress
+    external: true
+
+#Networks
+networks:
+  inception:
+    name: inception
+    driver: bridge
