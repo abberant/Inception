@@ -15,19 +15,19 @@ RUN         apt -y install mariadb-server mariadb-client
 #ALLOW MYSQLD DAEMON TO RUN, PURGE AND RECREATE /var/lib/mysql WITH APPROPRIATE PERMISSIONS
 RUN         mkdir -p /var/lib/mysql /var/run/mysqld
 RUN         chown -R mysql:mysql /var/lib/mysql /var/run/mysqld
-RUN         chmod 777 /var/run/mysqld
+RUN         chmod +x /var/run/mysqld
 
-#COPY THE MARIADB CONFIGURATION FILE AND dump.sql FILE
+#COPY THE MARIADB CONFIGURATION FILE
 COPY        ./conf/mariadb.cnf /etc/mysql/mariadb.conf.d/
-RUN         chmod 644 /etc/mysql/mariadb.conf.d/mariadb.cnf
+RUN         chmod +x /etc/mysql/mariadb.conf.d/mariadb.cnf
 #COPY        ./conf/dump.sql /usr/local/bin/
 
 #EXECUTE MARIADB INSTALLATION SCRIPT
 COPY        ./tools/install.sh /usr/local/bin/
-RUN         bash /usr/local/bin/install.sh
+RUN        chmod +x /usr/local/bin/install.sh
 
 #EXPOSE PORT 3306
 EXPOSE      3306
 
 #START MARIADB
-ENTRYPOINT  [ "mysqld" ]
+ENTRYPOINT  [ "/usr/local/bin/install.sh" ]

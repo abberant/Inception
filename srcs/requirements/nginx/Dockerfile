@@ -16,7 +16,7 @@ RUN         openssl req -x509 -nodes \
                     -newkey rsa:2048 \
                     -keyout /etc/ssl/private/nginx-selfsigned.key \
                     -out /etc/ssl/certs/nginx-selfsigned.crt \
-                    -subj "/C=FR/ST=Morocco/L=Morocco/O=1337/CN=${DOMAIN_NAME}"
+                    -subj "/C=MO/L=BG/O=1337/OU=student/CN=${DOMAIN_NAME}"
 
 #GUARANTEE THAT NGINX IS USING TSLSV1.3
 # RUN         sed -i 's/ssl_protocols.*/ssl_protocols TSLSV1.3;/' /etc/nginx/nginx.conf
