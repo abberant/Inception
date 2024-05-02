@@ -8,12 +8,12 @@ ARG         MYSQL_PASSWORD
 ARG         MYSQL_ROOT_PASSWORD
 
 #UPDATE AND UPGRADE PACKAGES
-RUN         apt-get update && apt-get upgrade -y
-RUN         apt-get install wget php8.2-fpm php8.2-mysql mariadb-client
+RUN         apt-get -y update && apt upgrade
+RUN         apt-get -y install wget php7.4-fpm php7.4-mysql mariadb-client
 
 #CONFIGURE PHP TO COMMUNICATE WITH NGINX
-RUN         MV /etc/php/8.2/fpm/pool.d/www.conf /etc/php/8.2/fpm/pool.d/www.conf.default
-COPY        ./conf/www.conf /etc/php/8.2/fpm/pool.d/
+RUN         mv /etc/php/7.4/fpm/pool.d/www.conf /etc/php/7.4/fpm/pool.d/www.conf.default
+COPY        ./conf/www.conf /etc/php/7.4/fpm/pool.d/
 RUN         ln -s $(find /usr/sbin -name 'php-fpm*') /usr/bin/php-fpm
 
 #EXPOSE PORT 9000
@@ -24,8 +24,8 @@ RUN         mkdir -p /run/php
 RUN         chmod 755 /run/php
 
 #EXECUTE WORDPRESS INSTALLATION SCRIPT
-COPY        ./tools/install.sh /usr/local/bin/
-RUN         bash /usr/local/bin/install.sh
+COPY        ./tools/scrip.sh .
+RUN         chmod +x ./scrip.sh
 
 #START PHP-FPM
-ENTRYPOINT  [ "php-fpm", "-F"]
+CMD  [ "./scrip.sh" ]

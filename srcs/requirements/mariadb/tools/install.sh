@@ -21,4 +21,3 @@ mariadb -u root -p $MYSQL_ROOT_PASSWORD "FLUSH PRIVILEGES;"
 
 # Stop MariaDB
 service mariadb stop
-mysql_safe

@@ -6,10 +6,11 @@ ARG         MYSQL_DATABASE
 ARG         MYSQL_USER
 ARG         MYSQL_PASSWORD
 ARG         MYSQL_ROOT_PASSWORD
+ARG         MYSQL_HOST
 
 #UPDATE AND UPGRADE PACKAGES
-RUN         apt-get update && apt-get upgrade -y
-RUN         apt-get install -y mariadb-server mariadb-client
+RUN         apt -y update && apt -y upgrade
+RUN         apt -y install mariadb-server mariadb-client
 
 #ALLOW MYSQLD DAEMON TO RUN, PURGE AND RECREATE /var/lib/mysql WITH APPROPRIATE PERMISSIONS
 RUN         mkdir -p /var/lib/mysql /var/run/mysqld
@@ -19,9 +20,9 @@ RUN         chmod 777 /var/run/mysqld
 #COPY THE MARIADB CONFIGURATION FILE AND dump.sql FILE
 COPY        ./conf/mariadb.cnf /etc/mysql/mariadb.conf.d/
 RUN         chmod 644 /etc/mysql/mariadb.conf.d/mariadb.cnf
-COPY        ./conf/dump.sql /usr/local/bin/
+#COPY        ./conf/dump.sql /usr/local/bin/
 
-#EXECURE MARIADB INSTALLATION SCRIPT
+#EXECUTE MARIADB INSTALLATION SCRIPT
 COPY        ./tools/install.sh /usr/local/bin/
 RUN         bash /usr/local/bin/install.sh
 
@@ -29,4 +30,4 @@ RUN         bash /usr/local/bin/install.sh
 EXPOSE      3306
 
 #START MARIADB
-ENTRYPOINT  [ "mysqld_safe"]
+ENTRYPOINT  [ "mysqld" ]

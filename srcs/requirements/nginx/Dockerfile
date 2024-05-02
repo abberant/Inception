@@ -14,18 +14,18 @@ RUN         apt-get install -y nginx openssl
 RUN         openssl req -x509 -nodes \
                     -days 365 \
                     -newkey rsa:2048 \
-                    -keyout /etc/ssl/private/${CERTS_KEY} \
-                    -out /etc/ssl/certs/${CERTS_CRT} \
+                    -keyout /etc/ssl/private/nginx-selfsigned.key \
+                    -out /etc/ssl/certs/nginx-selfsigned.crt \
                     -subj "/C=FR/ST=Morocco/L=Morocco/O=1337/CN=${DOMAIN_NAME}"
 
 #GUARANTEE THAT NGINX IS USING TSLSV1.3
-RUN         sed -i 's/ssl_protocols.*/ssl_protocols TSLSV3;/' /etc/nginx/nginx.conf
+# RUN         sed -i 's/ssl_protocols.*/ssl_protocols TSLSV1.3;/' /etc/nginx/nginx.conf
 
 #COPY NGINX CONFIGURATION FILE
-COPY        ./conf/https.conf /etc/nginx/conf.d/
-RUN         sed -i "s|aanouari.42.fr|${DOMAIN_NAME}|g" /etc/nginx/conf.d/https.conf
-RUN         sed -i "s|/etc/ssl/private/nginx-selfsigned.key|${CERTS_CRT}|g" /etc/nginx/conf.d/https.conf
-RUN         sed -i "s|/etc/ssl/certs/nginx-selfsigned.crt|${CERTS_KEY}|g" /etc/nginx/conf.d/https.conf
+COPY        ./conf/https.conf /etc/nginx/conf.d/default.conf
+# RUN         sed -i "s|aanouari.42.fr|${DOMAIN_NAME}|g" /etc/nginx/conf.d/https.conf
+# RUN         sed -i "s|/etc/ssl/private/nginx-selfsigned.key|${CERTS_CRT}|g" /etc/nginx/conf.d/https.conf
+# RUN         sed -i "s|/etc/ssl/certs/nginx-selfsigned.crt|${CERTS_KEY}|g" /etc/nginx/conf.d/https.conf
 
 #EXPOSE PORT 443
 EXPOSE      443
