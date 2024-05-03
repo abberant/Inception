@@ -48,7 +48,9 @@ services:
       context: ./requirements/nginx
       dockerfile: Dockerfile
       args:
-        - WORDPRESS_HOSTNAME
+        - DOMAIN_NAME
+        - CERTS_KEY
+        - CERTS_CRT
     networks:
       - inception
     volumes:
@@ -62,19 +64,27 @@ services:
 
 
 #Volumes
+# volumes:
+#   mariadb:
+#     driver: local
+#     driver_opts:
+#       type: none
+#       device: /home/aanouari/maria
+#       o: bind
+#   wordpress:
+#     driver: local
+#     driver_opts:
+#       type: none
+#       device: /home/aanouari/wordpress
+#       o: bind
+
 volumes:
   mariadb:
-    driver: local
-    driver_opts:
-      type: none
-      device: /home/aanouari/mariadb
-      o: bind
+    name: mariadb
+    external: false
   wordpress:
-    driver: local
-    driver_opts:
-      type: none
-      device: /home/aanouari/wordpress
-      o: bind
+    name: wordpress
+    external: false
 
 
 #Networks
