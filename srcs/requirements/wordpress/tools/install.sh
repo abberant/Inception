@@ -1,15 +1,15 @@
 #!/bin/bash
 
 # Download and extract WordPress
-# wget https://wordpress.org/latest.tar.gz
-# tar -xvf latest.tar.gz
+wget https://wordpress.org/latest.tar.gz
+tar -xvf latest.tar.gz
 mkdir -p /var/www/html/wordpress
 chmod 777 /var/www/html/wordpress
-# mv wordpress/* /var/www/html/wordpress
-# rm -rf latest.tar.gz
+mv wordpress/* /var/www/html/wordpress
+rm -rf latest.tar.gz
 
 # Change ownership of WordPress files
-# chown -R www-data:www-data /var/www/html/
+chown -R www-data:www-data /var/www/html/
 
 # Download wp-cli directly into the user's bin directory
 wget https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar -O /usr/local/bin/wp
