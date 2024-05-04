@@ -4,7 +4,7 @@ version: '3.8'
 services:
   mariadb:
     container_name: mariadb
-    image: mariadb:42
+    image: mariadb_42
     init: true
     env_file:
       - .env
@@ -24,7 +24,7 @@ services:
   
   wordpress:
     container_name: wordpress
-    image: wordpress:42
+    image: wordpress_42
     init: true
     env_file:
       - .env
@@ -35,7 +35,6 @@ services:
         - MYSQL_DATABASE
         - MYSQL_USER
         - MYSQL_PASSWORD
-        - WORDPRESS_HOSTNAME
     networks:
       - inception
     volumes:
@@ -46,7 +45,7 @@ services:
 
   nginx:
     container_name: nginx
-    image: nginx:42
+    image: nginx_42
     init: true
     env_file:
       - .env
@@ -69,28 +68,28 @@ services:
         - wordpress
 
 
-#Volumes
-# volumes:
-#   mariadb:
-#     driver: local
-#     driver_opts:
-#       type: none
-#       device: /home/aanouari/maria
-#       o: bind
-#   wordpress:
-#     driver: local
-#     driver_opts:
-#       type: none
-#       device: /home/aanouari/wordpress
-#       o: bind
-
+# Volumes
 volumes:
   mariadb:
-    name: mariadb
-    external: false
+    driver: local
+    driver_opts:
+      type: none
+      device: /home/aanouari/data/mariadb
+      o: bind
   wordpress:
-    name: wordpress
-    external: false
+    driver: local
+    driver_opts:
+      type: none
+      device: /home/aanouari/data/wordpress
+      o: bind
+
+# volumes:
+#   mariadb:
+#     name: mariadb
+#     external: false
+#   wordpress:
+#     name: wordpress
+#     external: false
 
 
 #Networks

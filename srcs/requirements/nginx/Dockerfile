@@ -8,7 +8,8 @@ ARG         CERTS_CRT
 
 #UPDATE AND UPGRADE PACKAGES
 RUN         apt-get update && apt-get upgrade -y
-RUN         apt-get install -y nginx openssl
+RUN         apt-get install -y nginx openssl mariadb-client
+
 
 #GENERATE SELF-SIGNED CERTIFICATES
 RUN         openssl req -x509 -nodes \
@@ -19,7 +20,7 @@ RUN         openssl req -x509 -nodes \
                     -subj "/C=MO/L=BG/O=1337/OU=student/CN=${DOMAIN_NAME}"
 
 #GUARANTEE THAT NGINX IS USING TSLSV1.3
-# RUN         sed -i 's/ssl_protocols.*/ssl_protocols TSLSV1.3;/' /etc/nginx/nginx.conf
+# RUN         sed -i 's/ssl_protocols.*/ssl_protocols TSLSV2;/' /etc/nginx/nginx.conf
 
 #COPY NGINX CONFIGURATION FILE
 COPY        ./conf/https.conf /etc/nginx/conf.d/default.conf
