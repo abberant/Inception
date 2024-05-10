@@ -14,12 +14,7 @@ mariadb -u root -p"$MYSQL_ROOT_PASSWORD" -e "FLUSH PRIVILEGES;"
 
 # Allow root user to login from any host
 mariadb -u root -p"$MYSQL_ROOT_PASSWORD" -e "GRANT ALL PRIVILEGES ON *.* TO 'root'@'localhost' IDENTIFIED BY '$MYSQL_ROOT_PASSWORD';"
-
 mariadb -u root -p"$MYSQL_ROOT_PASSWORD" -e "FLUSH PRIVILEGES;"
 
-# Stop MariaDB
-# service mariadb stop
-echo "test2"
 mysqladmin -u root -p"$MYSQL_ROOT_PASSWORD" shutdown
-echo "test1"
 mysqld

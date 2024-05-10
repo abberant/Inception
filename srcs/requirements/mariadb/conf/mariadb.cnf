@@ -1,8 +1,8 @@
 [mysqld]
+user=root
 datadir=/var/lib/mysql
 socket=/var/run/mysqld/mysqld.sock
 log-error=/var/log/mysql/error.log
-user=root
 
 # Set the character set and collation
 character-set-server=utf8mb4

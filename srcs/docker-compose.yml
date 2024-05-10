@@ -83,15 +83,6 @@ volumes:
       device: /home/aanouari/data/wordpress
       o: bind
 
-# volumes:
-#   mariadb:
-#     name: mariadb
-#     external: false
-#   wordpress:
-#     name: wordpress
-#     external: false
-
-
 #Networks
 networks:
   inception:
