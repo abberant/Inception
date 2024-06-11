@@ -1,4 +1,4 @@
-#!/bin/bash
+# #!/bin/bash
 
 service mariadb start
 
@@ -18,3 +18,4 @@ mariadb -u root -p"$MYSQL_ROOT_PASSWORD" -e "FLUSH PRIVILEGES;"
 
 mysqladmin -u root -p"$MYSQL_ROOT_PASSWORD" shutdown
 mysqld
+

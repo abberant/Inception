@@ -18,13 +18,13 @@ wp config set DB_USER $MYSQL_USER --allow-root --path=/var/www/html/wordpress
 wp config set DB_PASSWORD $MYSQL_PASSWORD --allow-root --path=/var/www/html/wordpress
 wp config set DB_HOST mariadb --allow-root --path=/var/www/html/wordpress
 
+
 wp --allow-root core install --path=/var/www/html/wordpress \
     --url="$WP_URL" \
     --title="$WP_TITLE" \
     --admin_user=$WP_ADMIN \
     --admin_password=$WP_ADMIN_PASSWORD \
     --admin_email=$WP_ADMIN_EMAIL
-
 
 wp --allow-root user create $WP_USER $WP_EMAIL --user_pass="$WP_PASSWORD" --path=/var/www/html/wordpress
 

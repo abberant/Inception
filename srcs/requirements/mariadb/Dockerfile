@@ -24,4 +24,4 @@ RUN         chmod +x /usr/local/bin/install.sh
 EXPOSE      3306
 
 #START MARIADB
-ENTRYPOINT  [ "./usr/local/bin/install.sh" ]
+CMD  [ "./usr/local/bin/install.sh" ]
