@@ -17,11 +17,11 @@ RUN         chmod 640 /etc/mysql/my.cnf
 RUN         chown -R mysql:mysql /var/lib/mysql
 
 #EXECUTE MARIADB INSTALLATION SCRIPT
-COPY        ./tools/install.sh /usr/local/bin/
-RUN         chmod +x /usr/local/bin/install.sh
+COPY        ./tools/install.sh .
+RUN         chmod +x ./install.sh
 
 #EXPOSE PORT 3306
 EXPOSE      3306
 
 #START MARIADB
-CMD  [ "./usr/local/bin/install.sh" ]
+CMD  [ "./install.sh" ]
